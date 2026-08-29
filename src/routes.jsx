@@ -20,9 +20,9 @@ function AppRoutes() {
       </Route>
 
       <Route path="/app" element={<AppLayout />}>
-        <Route path="dashboard" element={<h1>Minhas Solicitações</h1>} />
-        <Route path="items" element={<h1>Minhas Doações</h1>} />
-        <Route path="pedidos" element={<h1>Catálogo</h1>} />
+        <Route path="dashboard" element={<h1>Dashboard</h1>} />
+        <Route path="items" element={<h1>Doações</h1>} />
+        <Route path="pedidos" element={<h1>Solicitações</h1>} />
         <Route path="usuarios" element={<h1>Usuários</h1>} />
       </Route>
     </Routes>
