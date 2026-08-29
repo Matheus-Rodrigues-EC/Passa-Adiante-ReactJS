@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
+import logo from '../assets/logo.png'
 
 function Header() {
   return (
     <header className="header">
       <nav className="menu">
         <Link to="/" className="menu__logo">
-          <p>PassaAdiante</p>
+          <img src={logo} alt="PassaAdiante" />
         </Link>
 
         <ul className="menu__list">
