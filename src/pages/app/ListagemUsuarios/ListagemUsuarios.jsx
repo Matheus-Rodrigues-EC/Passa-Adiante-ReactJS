@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './ListagemUsuarios.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const mockUsuarios = [
     { id: 1, nome: 'Jorge Augusto', email: 'jaug.braga@gmail.com', role: 'User' },
@@ -16,6 +17,7 @@ const mockUsuarios = [
 const USERS_PER_PAGE = 5;
 
 export default function ListagemUsuarios() {
+    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -88,7 +90,11 @@ export default function ListagemUsuarios() {
                                         <td>{user.email}</td>
                                         <td>{user.role}</td>
                                         <td>
-                                            <button className={styles.actionBtn} title="Visualizar">
+                                            <button
+                                                className={styles.actionBtn}
+                                                title="Visualizar"
+                                                onClick={() => navigate(`/app/usuarios/${user.id}`)}
+                                            >
                                                 <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none">
                                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                     <circle cx="12" cy="12" r="3" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
