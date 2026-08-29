@@ -1,0 +1,158 @@
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+
+.headerRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pageTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #111827;
+    margin: 0;
+}
+
+.filterRow {
+    display: flex;
+    align-items: center;
+}
+
+.searchContainer {
+    position: relative;
+    width: 320px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.searchInput {
+    width: 100%;
+    padding: 10px 14px 10px 42px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background-color: #f9fafb;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.searchInput:focus {
+    border-color: #1a6396;
+    background-color: #ffffff;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    padding: 24px;
+}
+
+.tableWrapper {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.tableHeader {
+    background-color: #1a6396;
+    color: #ffffff;
+}
+
+.tableHeader th {
+    padding: 14px 20px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.sortIcon {
+    font-size: 0.8rem;
+    margin-left: 4px;
+    opacity: 0.8;
+}
+
+.tableRow {
+    border-bottom: 1px solid #e5e7eb;
+    transition: background-color 0.15s;
+}
+
+.tableRow:last-child {
+    border-bottom: none;
+}
+
+.tableRow:hover {
+    background-color: #f9fafb;
+}
+
+.tableRow td {
+    padding: 16px 20px;
+    color: #374151;
+    font-size: 0.95rem;
+}
+
+.actionBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.actionBtn:hover {
+    background-color: #f3f4f6;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+}
+
+.pageNumber,
+.pageArrow {
+    background: none;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #4b5563;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.pageNumber:hover,
+.pageArrow:hover {
+    background-color: #f3f4f6;
+}
+
+.pageNumber.active {
+    background-color: #1a6396;
+    color: #ffffff;
+    font-weight: 600;
+}
