@@ -1,0 +1,124 @@
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+
+.statsRow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.statCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 32px 16px;
+    border-radius: 16px;
+}
+
+.statValue {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.statLabel {
+    font-size: 1.05rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.statCardDark {
+    background-color: #080640;
+    color: #d9d9d9;
+}
+
+.statCardBlue {
+    background-color: #36a0fd;
+    color: #080640;
+}
+
+.statCardGreen {
+    background-color: #078c5b;
+    color: #d9d9d9;
+}
+
+.statCardCyan {
+    background-color: #2bb9d9;
+    color: #080640;
+}
+
+.sectionTitle {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    background-color: #79bed9;
+    color: #111827;
+    font-size: 1.25rem;
+    font-weight: 700;
+    padding: 12px 24px;
+    border-radius: 30px;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.tableWrapper {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.tableHeader {
+    background-color: rgba(121, 199, 217, 0.8);
+    color: #111827;
+}
+
+.tableHeader th {
+    padding: 14px 20px;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.tableRow:nth-child(odd) {
+    background-color: #f3f4f2;
+}
+
+.tableRow:nth-child(even) {
+    background-color: #dfe9e5;
+}
+
+.tableRow td {
+    padding: 16px 20px;
+    color: #374151;
+    font-size: 0.95rem;
+}
+
+.actionBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.actionBtn:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+}
