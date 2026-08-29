@@ -6,6 +6,8 @@ import Catalogo from './pages/Catalogo.jsx'
 import ComoParticipar from './pages/ComoParticipar.jsx'
 import Contato from './pages/Contato.jsx'
 
+import { AppLayout } from './layouts/AppLayout.jsx'
+
 function AppRoutes() {
   return (
     <Routes>
@@ -15,6 +17,13 @@ function AppRoutes() {
         <Route path="/catalogo" element={<Catalogo />} />
         <Route path="/como-participar" element={<ComoParticipar />} />
         <Route path="/contato" element={<Contato />} />
+      </Route>
+
+      <Route path="/app" element={<AppLayout />}>
+        <Route path="dashboard" element={<h1>Minhas Solicitações</h1>} />
+        <Route path="items" element={<h1>Minhas Doações</h1>} />
+        <Route path="pedidos" element={<h1>Catálogo</h1>} />
+        <Route path="usuarios" element={<h1>Usuários</h1>} />
       </Route>
     </Routes>
   )
