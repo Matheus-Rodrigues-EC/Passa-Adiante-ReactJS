@@ -1,23 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './ListagemItems.module.css';
-
-const mockItems = [
-    { id: 1, nome: 'Livro de Ciências', categoria: 'Livro', estado: 'Usado', disponivel: 'Sim' },
-    { id: 2, nome: 'Mochila c/ roda', categoria: 'Acessório', estado: 'Usado', disponivel: 'Não' },
-    { id: 3, nome: 'Caderno 10 Mat.', categoria: 'Livro', estado: 'Novo', disponivel: 'Sim' },
-    { id: 4, nome: 'Kit de canetas', categoria: 'Acessório', estado: 'Novo', disponivel: 'Não' },
-    { id: 5, nome: 'Canetinhas', categoria: 'Acessório', estado: 'Novo', disponivel: 'Sim' },
-    { id: 6, nome: 'Dicionário de Inglês', categoria: 'Livro', estado: 'Novo', disponivel: 'Sim' },
-    { id: 7, nome: 'Estojo escolar', categoria: 'Acessório', estado: 'Usado', disponivel: 'Sim' },
-    { id: 8, nome: 'Calculadora Científica', categoria: 'Eletrônico', estado: 'Novo', disponivel: 'Não' },
-    { id: 9, nome: 'Bloco de Notas', categoria: 'Papelaria', estado: 'Novo', disponivel: 'Sim' },
-    { id: 10, nome: 'Regua 30cm', categoria: 'Papelaria', estado: 'Usado', disponivel: 'Sim' },
-    { id: 11, nome: 'Tesoura escolar', categoria: 'Papelaria', estado: 'Novo', disponivel: 'Não' }
-];
+import mockItems from '../../../data/mockItems.js';
 
 const ITEMS_PER_PAGE = 5;
 
 export default function ListagemItems() {
+    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -47,7 +36,7 @@ export default function ListagemItems() {
         <div className={styles.pageContainer}>
             <div className={styles.headerRow}>
                 <h2 className={styles.pageTitle}>Listagem de Itens</h2>
-                <button className={styles.addButton}>
+                <button className={styles.addButton} onClick={() => navigate('/app/items/novo')}>
                     Adicionar item
                 </button>
             </div>
@@ -97,7 +86,11 @@ export default function ListagemItems() {
                                         <td>{item.estado}</td>
                                         <td>{item.disponivel}</td>
                                         <td>
-                                            <button className={styles.actionBtn} title="Visualizar">
+                                            <button
+                                                className={styles.actionBtn}
+                                                title="Visualizar"
+                                                onClick={() => navigate(`/app/items/${item.id}`)}
+                                            >
                                                 <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none">
                                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                     <circle cx="12" cy="12" r="3" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
