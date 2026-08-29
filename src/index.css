@@ -109,6 +109,11 @@ h1 {
     text-decoration: none;
 }
 
+.menu__logo img {
+    height: 48px;
+    width: auto;
+}
+
 .menu__actions {
     display: flex;
     gap: 1rem;
