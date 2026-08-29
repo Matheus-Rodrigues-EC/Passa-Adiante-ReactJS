@@ -10,6 +10,7 @@ import { AppLayout } from './layouts/AppLayout.jsx'
 import ListagemItems from './pages/app/ListagemItems/ListagemItems.jsx'
 import ListagemUsuarios from './pages/app/ListagemUsuarios/ListagemUsuarios.jsx'
 import Dashboard from './pages/app/Dashboard/Dashboard.jsx'
+import PaginaUsuario from './pages/app/PaginaUsuario/PaginaUsuario.jsx'
 
 function AppRoutes() {
   return (
@@ -27,6 +28,7 @@ function AppRoutes() {
         <Route path="items" element={<ListagemItems />} />
         <Route path="pedidos" element={<h1>Solicitações</h1>} />
         <Route path="usuarios" element={<ListagemUsuarios />} />
+        <Route path="usuarios/:id" element={<PaginaUsuario />} />
       </Route>
     </Routes>
   )
