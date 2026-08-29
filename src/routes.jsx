@@ -7,7 +7,7 @@ import ComoParticipar from './pages/ComoParticipar.jsx'
 import Contato from './pages/Contato.jsx'
 
 import { AppLayout } from './layouts/AppLayout.jsx'
-import ListagemItems from './components/ListagemItems/ListagemItems.jsx'
+import ListagemItems from './pages/app/ListagemItems/ListagemItems.jsx'
 
 function AppRoutes() {
   return (
