@@ -76,7 +76,8 @@ function SobreOProjeto() {
         <h2>Quem faz o Passa Adiante</h2>
         <p>
           Somos a equipe Anteiku, do Polo Caucaia, desenvolvendo este projeto
-          na disciplina de Desenvolvimento para Web da UFCA.
+          na disciplina de Projeto Integrado 3 e Disciplina integrada{' '}
+          <em>Desenvolvimento para Web</em> da UFCA.
         </p>
 
         <ul className="team-section__list">
