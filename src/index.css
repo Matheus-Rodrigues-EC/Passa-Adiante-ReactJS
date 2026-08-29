@@ -103,10 +103,16 @@ h1 {
 .menu__logo {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
     color: var(--color-bg-stats);
     font-size: 1.25rem;
     font-weight: 600;
     text-decoration: none;
+}
+
+.menu__logo img {
+    height: 48px;
+    width: auto;
 }
 
 .menu__actions {

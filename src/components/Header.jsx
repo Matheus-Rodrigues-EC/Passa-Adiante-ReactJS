@@ -22,7 +22,8 @@ function Header() {
     <header className="header">
       <nav className="menu">
         <Link to="/" className="menu__logo">
-          <img src={logo} alt="PassaAdiante" />
+          <img src={logo} alt="" />
+          <p>PassaAdiante</p>
         </Link>
 
         <button
