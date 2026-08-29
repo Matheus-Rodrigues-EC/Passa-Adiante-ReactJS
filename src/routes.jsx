@@ -9,6 +9,7 @@ import Contato from './pages/Contato.jsx'
 import { AppLayout } from './layouts/AppLayout.jsx'
 import ListagemItems from './pages/app/ListagemItems/ListagemItems.jsx'
 import ListagemUsuarios from './pages/app/ListagemUsuarios/ListagemUsuarios.jsx'
+import Dashboard from './pages/app/Dashboard/Dashboard.jsx'
 import PaginaItem from './pages/app/PaginaItem/PaginaItem.jsx'
 
 function AppRoutes() {
@@ -23,7 +24,7 @@ function AppRoutes() {
       </Route>
 
       <Route path="/app" element={<AppLayout />}>
-        <Route path="dashboard" element={<h1>Dashboard</h1>} />
+        <Route path="dashboard" element={<Dashboard />} />
         <Route path="items" element={<ListagemItems />} />
         <Route path="items/novo" element={<PaginaItem />} />
         <Route path="items/:id" element={<PaginaItem />} />
