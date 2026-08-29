@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import styles from './PedidoAguardandoAprovacao.module.css';
+import styles from './PedidoAguardandoConclusao.module.css';
 
-export default function PedidoAguardandoAprovacao({ pedido }) {
+export default function PedidoAguardandoConclusao({ pedido }) {
     const navigate = useNavigate();
 
-    function handleAprovar() {
+    function handleConcluir() {
         // Sem persistência real ainda, isso é escopo da integração com a API (#44).
         navigate('/app/pedidos');
     }
@@ -51,7 +51,7 @@ export default function PedidoAguardandoAprovacao({ pedido }) {
             </div>
 
             <div className={styles.actions}>
-                <button type="button" className={styles.approveButton} onClick={handleAprovar}>
+                <button type="button" className={styles.approveButton} disabled>
                     <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none">
                         <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
@@ -64,7 +64,7 @@ export default function PedidoAguardandoAprovacao({ pedido }) {
                     </svg>
                     Cancelar
                 </button>
-                <button type="button" className={styles.completeButton} disabled>
+                <button type="button" className={styles.completeButton} onClick={handleConcluir}>
                     <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none">
                         <path d="M2 13l4 4L14 9" strokeLinecap="round" strokeLinejoin="round" />
                         <path d="M10 13l4 4L22 9" strokeLinecap="round" strokeLinejoin="round" />

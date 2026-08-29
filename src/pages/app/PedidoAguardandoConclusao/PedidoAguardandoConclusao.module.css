@@ -1,0 +1,126 @@
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: 100%;
+}
+
+.pageTitle {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #111827;
+    margin: 0;
+}
+
+.content {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.mediaColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    min-width: 280px;
+    max-width: 420px;
+}
+
+.imagePlaceholder {
+    width: 100%;
+    aspect-ratio: 5 / 4;
+    background-color: #d9d9d9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.solicitanteInfo {
+    font-size: 1.1rem;
+    color: #111827;
+    line-height: 1.8;
+    margin: 0;
+}
+
+.formColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 1;
+    min-width: 280px;
+    max-width: 420px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.fieldLabel {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #111827;
+}
+
+.fieldBox {
+    background-color: #ffffff;
+    border: 1px solid #ccd5dc;
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 1rem;
+    color: #111827;
+}
+
+.fieldBoxDisabled {
+    background-color: #f3eded;
+}
+
+.actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 56px;
+    padding: 0 32px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.approveButton {
+    background-color: #207868;
+    color: #ffffff;
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.cancelButton {
+    background-color: #fc0;
+    color: #111827;
+}
+
+.cancelButton:hover {
+    opacity: 0.9;
+}
+
+.completeButton {
+    background-color: #207868;
+    color: #ffffff;
+}
+
+.completeButton:hover {
+    opacity: 0.9;
+}
