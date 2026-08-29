@@ -1,7 +1,23 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/logo.png'
+import menuIcon from '../assets/menu-icon.png'
+
+const NAV_LINKS = [
+  { to: '/', label: 'Início' },
+  { to: '/sobre-o-projeto', label: 'Sobre' },
+  { to: '/como-participar', label: 'Como participar' },
+  { to: '/catalogo', label: 'Catálogo' },
+  { to: '/contato', label: 'Contato' },
+]
 
 function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  function closeMobileMenu() {
+    setMobileMenuOpen(false)
+  }
+
   return (
     <header className="header">
       <nav className="menu">
@@ -9,22 +25,58 @@ function Header() {
           <img src={logo} alt="PassaAdiante" />
         </Link>
 
+        <button
+          type="button"
+          className="menu__mobile"
+          aria-label="Abrir menu"
+          onClick={() => setMobileMenuOpen(true)}
+        >
+          <img src={menuIcon} alt="Ícone Menu Mobile" />
+        </button>
+
+        <div
+          className={
+            mobileMenuOpen ? 'menu__overlay menu__overlay--open' : 'menu__overlay'
+          }
+          onClick={closeMobileMenu}
+        />
+
+        <ul
+          className={
+            mobileMenuOpen
+              ? 'menu__list-mobile menu__list-mobile--open'
+              : 'menu__list-mobile'
+          }
+        >
+          <button
+            type="button"
+            className="menu__close"
+            aria-label="Fechar menu"
+            onClick={closeMobileMenu}
+          >
+            &times;
+          </button>
+
+          {NAV_LINKS.map((link) => (
+            <li className="menu__item" key={link.to}>
+              <Link to={link.to} className="menu__link" onClick={closeMobileMenu}>
+                {link.label}
+              </Link>
+            </li>
+          ))}
+
+          <div className="menu__mobile-actions">
+            <button type="button" className="btn btn--primary">Entrar</button>
+            <button type="button" className="btn btn--secondary">Cadastre-se</button>
+          </div>
+        </ul>
+
         <ul className="menu__list">
-          <li className="menu__item">
-            <Link to="/" className="menu__link">Início</Link>
-          </li>
-          <li className="menu__item">
-            <Link to="/sobre-o-projeto" className="menu__link">Sobre</Link>
-          </li>
-          <li className="menu__item">
-            <Link to="/como-participar" className="menu__link">Como participar</Link>
-          </li>
-          <li className="menu__item">
-            <Link to="/catalogo" className="menu__link">Catálogo</Link>
-          </li>
-          <li className="menu__item">
-            <Link to="/contato" className="menu__link">Contato</Link>
-          </li>
+          {NAV_LINKS.map((link) => (
+            <li className="menu__item" key={link.to}>
+              <Link to={link.to} className="menu__link">{link.label}</Link>
+            </li>
+          ))}
         </ul>
 
         <div className="menu__actions">
