@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './ListagemPedidos.module.css';
 import mockPedidos from '../../../data/mockPedidos.js';
 
 const PEDIDOS_PER_PAGE = 5;
 
 export default function ListagemPedidos() {
+    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -85,7 +87,11 @@ export default function ListagemPedidos() {
                                         <td>{pedido.status}</td>
                                         <td>{pedido.data}</td>
                                         <td>
-                                            <button className={styles.actionBtn} title="Visualizar">
+                                            <button
+                                                className={styles.actionBtn}
+                                                title="Visualizar"
+                                                onClick={() => navigate(`/app/pedidos/${pedido.id}`)}
+                                            >
                                                 <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none">
                                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                     <circle cx="12" cy="12" r="3" stroke="#374151" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

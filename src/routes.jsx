@@ -12,6 +12,7 @@ import ListagemUsuarios from './pages/app/ListagemUsuarios/ListagemUsuarios.jsx'
 import Dashboard from './pages/app/Dashboard/Dashboard.jsx'
 import PaginaItem from './pages/app/PaginaItem/PaginaItem.jsx'
 import ListagemPedidos from './pages/app/ListagemPedidos/ListagemPedidos.jsx'
+import PedidoAguardandoAprovacao from './pages/app/PedidoAguardandoAprovacao/PedidoAguardandoAprovacao.jsx'
 
 function AppRoutes() {
   return (
@@ -30,6 +31,7 @@ function AppRoutes() {
         <Route path="items/novo" element={<PaginaItem />} />
         <Route path="items/:id" element={<PaginaItem />} />
         <Route path="pedidos" element={<ListagemPedidos />} />
+        <Route path="pedidos/:id" element={<PedidoAguardandoAprovacao />} />
         <Route path="usuarios" element={<ListagemUsuarios />} />
       </Route>
     </Routes>
