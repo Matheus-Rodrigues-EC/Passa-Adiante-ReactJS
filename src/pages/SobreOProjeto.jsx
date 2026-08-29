@@ -81,6 +81,7 @@ function SobreOProjeto() {
 
         <ul className="team-section__list">
           <li>Holivane Holanda</li>
+          <li>Matheus Rodrigues</li>
           <li>Rodrigo Bezerra</li>
           <li>Sara Ferreira</li>
         </ul>
