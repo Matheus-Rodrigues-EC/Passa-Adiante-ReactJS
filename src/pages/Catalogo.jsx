@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import catalogItems, { categoryOptions, conditionOptions } from '../data/catalogItems.js'
+import SelectCustom from '../components/SelectCustom.jsx'
 
 function Catalogo() {
   const [category, setCategory] = useState('')
@@ -32,34 +33,24 @@ function Catalogo() {
         <form id="catalog-filters" onSubmit={handleSubmit}>
           <div className="catalog-filters__field catalog-filters__field--category">
             <label htmlFor="filter-category">Categoria</label>
-            <select
+            <SelectCustom
               id="filter-category"
               name="category"
+              options={categoryOptions}
               value={category}
-              onChange={(event) => setCategory(event.target.value)}
-            >
-              {categoryOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+              onChange={setCategory}
+            />
           </div>
 
           <div className="catalog-filters__field catalog-filters__field--condition">
             <label htmlFor="filter-condition">Estado de conservação</label>
-            <select
+            <SelectCustom
               id="filter-condition"
               name="condition"
+              options={conditionOptions}
               value={condition}
-              onChange={(event) => setCondition(event.target.value)}
-            >
-              {conditionOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+              onChange={setCondition}
+            />
           </div>
 
           <button type="submit" className="btn btn--primary">Filtrar</button>
