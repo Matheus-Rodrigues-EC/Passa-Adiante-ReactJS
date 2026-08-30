@@ -1,28 +1,40 @@
-import { useState } from 'react';
-import styles from './ListagemUsuarios.module.css';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const mockUsuarios = [
-    { id: 1, nome: 'Jorge Augusto', email: 'jaug.braga@gmail.com', role: 'User' },
-    { id: 2, nome: 'Lara Santana', email: 'laurinha23@hotmail.com', role: 'User' },
-    { id: 3, nome: 'Marcelo Antônio', email: 'marquinhosilva@gmail.com', role: 'User' },
-    { id: 4, nome: 'Lucas Vieira', email: 'luvi@yahoo.com.br', role: 'User' },
-    { id: 5, nome: 'Ana Maria Moura', email: 'ana.mounra@passeadiante.com', role: 'ADMIN' },
-    { id: 6, nome: 'Maria Aparecida Lima', email: 'mapa_lima@gmail.com', role: 'User' },
-    { id: 7, nome: 'Julio Antonio Arara', email: 'ju_arara@yahoo.com.br', role: 'User' },
-    { id: 8, nome: 'Laura Maria das Neves', email: 'laura.neves@passeadiante.com', role: 'ADMIN' },
-    { id: 9, nome: 'Laura Maria das Neves', email: 'laura.neves@passeadiante.com', role: 'User' },
-];
+import styles from './ListagemUsuarios.module.css';
+import { listUsers } from '../../../services/usersService.js';
+import { typeLabel } from '../../../data/userOptions.js';
 
 const USERS_PER_PAGE = 5;
 
 export default function ListagemUsuarios() {
     const navigate = useNavigate();
+    const [usuarios, setUsuarios] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
-    const filteredUsuarios = mockUsuarios.filter(user =>
-        user.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    useEffect(() => {
+        let cancelled = false;
+
+        listUsers()
+            .then((data) => {
+                if (!cancelled) setUsuarios(data);
+            })
+            .catch(() => {
+                if (!cancelled) setError('Não foi possível carregar os usuários.');
+            })
+            .finally(() => {
+                if (!cancelled) setLoading(false);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    const filteredUsuarios = usuarios.filter(user =>
+        user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -65,6 +77,8 @@ export default function ListagemUsuarios() {
                 </div>
             </div>
 
+            {error && <p className={styles.errorMessage}>{error}</p>}
+
             <div className={styles.card}>
                 <div className={styles.tableWrapper}>
                     <table className={styles.table}>
@@ -77,18 +91,24 @@ export default function ListagemUsuarios() {
                                     E-mail <span className={styles.sortIcon}>↕</span>
                                 </th>
                                 <th>
-                                    Role <span className={styles.sortIcon}>↕</span>
+                                    Tipo <span className={styles.sortIcon}>↕</span>
                                 </th>
                                 <th>Ação</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {currentUsuarios.length > 0 ? (
+                            {loading ? (
+                                <tr>
+                                    <td colSpan="4" style={{ textAlign: 'center', padding: '24px', color: '#6b7280' }}>
+                                        Carregando usuários...
+                                    </td>
+                                </tr>
+                            ) : currentUsuarios.length > 0 ? (
                                 currentUsuarios.map((user) => (
                                     <tr key={user.id} className={styles.tableRow}>
-                                        <td>{user.nome}</td>
+                                        <td>{user.name}</td>
                                         <td>{user.email}</td>
-                                        <td>{user.role}</td>
+                                        <td>{typeLabel(user.type)}</td>
                                         <td>
                                             <button
                                                 className={styles.actionBtn}

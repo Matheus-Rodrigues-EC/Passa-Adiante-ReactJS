@@ -1,26 +1,46 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './PaginaUsuario.module.css';
+import { getUser, updateUser, deleteUser } from '../../../services/usersService.js';
+import { typeOptions } from '../../../data/userOptions.js';
 
-const mockUsuarios = [
-    { id: '1', nome: 'Jorge Augusto', email: 'jaug.braga@gmail.com', role: 'User' },
-    { id: '2', nome: 'Lara Santana', email: 'laurinha23@hotmail.com', role: 'User' },
-    { id: '3', nome: 'Marcelo Antônio', email: 'marquinhosilva@gmail.com', role: 'User' },
-    { id: '4', nome: 'Lucas Vieira', email: 'luvi@yahoo.com.br', role: 'User' },
-    { id: '5', nome: 'Ana Maria Moura', email: 'ana.mounra@passeadiante.com', role: 'ADMIN' },
-    { id: '6', nome: 'Maria Aparecida Lima', email: 'mapa_lima@gmail.com', role: 'User' },
-    { id: '7', nome: 'Julio Antonio Arara', email: 'ju_arara@yahoo.com.br', role: 'User' },
-    { id: '8', nome: 'Laura Maria das Neves', email: 'laura.neves@passeadiante.com', role: 'ADMIN' },
-    { id: '9', nome: 'Laura Maria das Neves', email: 'laura.neves@passeadiante.com', role: 'User' },
-];
+const emptyUsuario = { name: '', email: '', type: typeOptions[0].value, phones: '', address: '' };
 
 export default function PaginaUsuario() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [usuario, setUsuario] = useState(() => (
-        mockUsuarios.find(u => u.id === id) ?? { nome: '', email: '', role: 'USER' }
-    ));
+    const [usuario, setUsuario] = useState(emptyUsuario);
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        let cancelled = false;
+
+        getUser(id)
+            .then((data) => {
+                if (!cancelled) {
+                    setUsuario({
+                        name: data.name ?? '',
+                        email: data.email,
+                        type: data.type,
+                        phones: (data.phones ?? []).join(', '),
+                        address: data.address ?? '',
+                    });
+                }
+            })
+            .catch(() => {
+                if (!cancelled) setError('Não foi possível carregar o usuário.');
+            })
+            .finally(() => {
+                if (!cancelled) setLoading(false);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -29,18 +49,49 @@ export default function PaginaUsuario() {
 
     const handleSave = (e) => {
         e.preventDefault();
-        console.log('Salvando alterações do usuário ID:', id, usuario);
-        navigate('/app/usuarios');
+        setSaving(true);
+        setError(null);
+
+        const payload = {
+            name: usuario.name,
+            email: usuario.email,
+            type: usuario.type,
+            phones: usuario.phones.split(',').map((phone) => phone.trim()).filter(Boolean),
+            address: usuario.address || undefined,
+        };
+
+        updateUser(id, payload)
+            .then(() => navigate('/app/usuarios'))
+            .catch(() => {
+                setError('Não foi possível salvar as alterações.');
+                setSaving(false);
+            });
     };
 
     const handleDelete = () => {
-        console.log('Excluir usuário ID:', id);
-        navigate('/app/usuarios');
+        setSaving(true);
+        setError(null);
+        deleteUser(id)
+            .then(() => navigate('/app/usuarios'))
+            .catch(() => {
+                setError('Não foi possível excluir o usuário.');
+                setSaving(false);
+            });
     };
+
+    if (loading) {
+        return (
+            <div className={styles.pageContainer}>
+                <p>Carregando...</p>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.pageContainer}>
             <h2 className={styles.pageTitle}>Página de Usuário</h2>
+
+            {error && <p className={styles.errorMessage}>{error}</p>}
 
             <div className={styles.card}>
                 <form onSubmit={handleSave} className={styles.formContent}>
@@ -65,8 +116,8 @@ export default function PaginaUsuario() {
                             <label className={styles.label}>Nome:</label>
                             <input
                                 type="text"
-                                name="nome"
-                                value={usuario.nome}
+                                name="name"
+                                value={usuario.name}
                                 onChange={handleChange}
                                 className={styles.input}
                             />
@@ -84,16 +135,39 @@ export default function PaginaUsuario() {
                         </div>
 
                         <div className={styles.inputGroup}>
-                            <label className={styles.label}>Role:</label>
+                            <label className={styles.label}>Telefones (separados por vírgula):</label>
+                            <input
+                                type="text"
+                                name="phones"
+                                value={usuario.phones}
+                                onChange={handleChange}
+                                className={styles.input}
+                            />
+                        </div>
+
+                        <div className={styles.inputGroup}>
+                            <label className={styles.label}>Endereço:</label>
+                            <input
+                                type="text"
+                                name="address"
+                                value={usuario.address}
+                                onChange={handleChange}
+                                className={styles.input}
+                            />
+                        </div>
+
+                        <div className={styles.inputGroup}>
+                            <label className={styles.label}>Tipo:</label>
                             <div className={styles.selectWrapper}>
                                 <select
-                                    name="role"
-                                    value={usuario.role}
+                                    name="type"
+                                    value={usuario.type}
                                     onChange={handleChange}
                                     className={styles.select}
                                 >
-                                    <option value="USER">USER</option>
-                                    <option value="ADMIN">ADMIN</option>
+                                    {typeOptions.map((option) => (
+                                        <option key={option.value} value={option.value}>{option.label}</option>
+                                    ))}
                                 </select>
                                 <svg className={styles.selectArrow} viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none">
                                     <polyline points="6 9 12 15 18 9" strokeLinecap="round" strokeLinejoin="round" />
@@ -104,20 +178,20 @@ export default function PaginaUsuario() {
                 </form>
 
                 <div className={styles.actionsFooter}>
-                    <button type="button" onClick={handleDelete} className={styles.deleteButton}>
+                    <button type="button" onClick={handleDelete} className={styles.deleteButton} disabled={saving}>
                         <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none">
                             <polyline points="3 6 5 6 21 6" strokeLinecap="round" strokeLinejoin="round" />
                             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                         Excluir Usuário
                     </button>
-                    <button type="button" onClick={handleSave} className={styles.saveButton}>
+                    <button type="button" onClick={handleSave} className={styles.saveButton} disabled={saving}>
                         <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none">
                             <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" strokeLinecap="round" strokeLinejoin="round" />
                             <polyline points="17 21 17 13 7 13 7 21" strokeLinecap="round" strokeLinejoin="round" />
                             <polyline points="7 3 7 8 15 8" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                        Salvar Alterações
+                        {saving ? 'Salvando...' : 'Salvar Alterações'}
                     </button>
                 </div>
             </div>
