@@ -87,8 +87,8 @@ function Header() {
         </ul>
 
         <div className="menu__actions">
-          <button type="button" className="btn btn--primary">Entrar</button>
-          <button type="button" className="btn btn--secondary">Cadastre-se</button>
+          <button type="button" className="btn btn--primary" onClick={goToEscolherPerfil}>Entrar</button>
+          <button type="button" className="btn btn--secondary" onClick={goToEscolherPerfil}>Cadastre-se</button>
         </div>
       </nav>
     </header>
