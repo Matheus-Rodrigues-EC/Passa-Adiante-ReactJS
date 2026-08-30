@@ -10,6 +10,7 @@ import { AppLayout } from './layouts/AppLayout.jsx'
 import ListagemItems from './pages/app/ListagemItems/ListagemItems.jsx'
 import ListagemUsuarios from './pages/app/ListagemUsuarios/ListagemUsuarios.jsx'
 import Dashboard from './pages/app/Dashboard/Dashboard.jsx'
+import PaginaUsuario from './pages/app/PaginaUsuario/PaginaUsuario.jsx'
 import PaginaItem from './pages/app/PaginaItem/PaginaItem.jsx'
 import ListagemPedidos from './pages/app/ListagemPedidos/ListagemPedidos.jsx'
 import PedidoAguardandoAprovacao from './pages/app/PedidoAguardandoAprovacao/PedidoAguardandoAprovacao.jsx'
@@ -33,6 +34,7 @@ function AppRoutes() {
         <Route path="pedidos" element={<ListagemPedidos />} />
         <Route path="pedidos/:id" element={<PedidoAguardandoAprovacao />} />
         <Route path="usuarios" element={<ListagemUsuarios />} />
+        <Route path="usuarios/:id" element={<PaginaUsuario />} />
       </Route>
     </Routes>
   )
