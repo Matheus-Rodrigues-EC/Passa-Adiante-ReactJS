@@ -1,18 +1,41 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ListagemPedidos.module.css';
-import mockPedidos from '../../../data/mockPedidos.js';
+import { listOrders } from '../../../services/ordersService.js';
+import { statusLabel } from '../../../data/orderOptions.js';
 
 const PEDIDOS_PER_PAGE = 5;
 
 export default function ListagemPedidos() {
     const navigate = useNavigate();
+    const [pedidos, setPedidos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
-    const filteredPedidos = mockPedidos.filter(pedido =>
-        pedido.usuario.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        pedido.item.toLowerCase().includes(searchTerm.toLowerCase())
+    useEffect(() => {
+        let cancelled = false;
+
+        listOrders()
+            .then((data) => {
+                if (!cancelled) setPedidos(data);
+            })
+            .catch(() => {
+                if (!cancelled) setError('Não foi possível carregar os pedidos.');
+            })
+            .finally(() => {
+                if (!cancelled) setLoading(false);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    const filteredPedidos = pedidos.filter(pedido =>
+        pedido.user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        pedido.item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const totalPages = Math.ceil(filteredPedidos.length / PEDIDOS_PER_PAGE) || 1;
@@ -54,14 +77,13 @@ export default function ListagemPedidos() {
                 </div>
             </div>
 
+            {error && <p className={styles.errorMessage}>{error}</p>}
+
             <div className={styles.card}>
                 <div className={styles.tableWrapper}>
                     <table className={styles.table}>
                         <thead>
                             <tr className={styles.tableHeader}>
-                                <th>
-                                    ID <span className={styles.sortIcon}>↕</span>
-                                </th>
                                 <th>
                                     Usuário <span className={styles.sortIcon}>↕</span>
                                 </th>
@@ -71,21 +93,22 @@ export default function ListagemPedidos() {
                                 <th>
                                     Status <span className={styles.sortIcon}>↕</span>
                                 </th>
-                                <th>
-                                    Data <span className={styles.sortIcon}>↕</span>
-                                </th>
                                 <th>Ação</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {currentPedidos.length > 0 ? (
+                            {loading ? (
+                                <tr>
+                                    <td colSpan="4" style={{ textAlign: 'center', padding: '24px', color: '#6b7280' }}>
+                                        Carregando pedidos...
+                                    </td>
+                                </tr>
+                            ) : currentPedidos.length > 0 ? (
                                 currentPedidos.map((pedido) => (
                                     <tr key={pedido.id} className={styles.tableRow}>
-                                        <td>{pedido.id}</td>
-                                        <td>{pedido.usuario}</td>
-                                        <td>{pedido.item}</td>
-                                        <td>{pedido.status}</td>
-                                        <td>{pedido.data}</td>
+                                        <td>{pedido.user.name}</td>
+                                        <td>{pedido.item.name}</td>
+                                        <td>{statusLabel(pedido.status)}</td>
                                         <td>
                                             <button
                                                 className={styles.actionBtn}
@@ -102,7 +125,7 @@ export default function ListagemPedidos() {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="6" style={{ textAlign: 'center', padding: '24px', color: '#6b7280' }}>
+                                    <td colSpan="4" style={{ textAlign: 'center', padding: '24px', color: '#6b7280' }}>
                                         Nenhum pedido encontrado.
                                     </td>
                                 </tr>
