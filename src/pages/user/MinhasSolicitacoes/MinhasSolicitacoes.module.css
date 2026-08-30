@@ -1,0 +1,165 @@
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+
+.pageTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #111827;
+    margin: 0;
+}
+
+.filtersRow {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.searchInput {
+    flex: 1;
+    min-width: 260px;
+    padding: 12px 16px;
+    border: 1.5px solid #e5e7ea;
+    border-radius: 12px;
+    background-color: #f9fafb;
+    font-size: 1rem;
+    outline: none;
+}
+
+.searchInput:focus {
+    border-color: #1e6b5c;
+    background-color: #ffffff;
+}
+
+.statusField {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.statusField label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #131927;
+}
+
+.statusSelect {
+    min-width: 200px;
+    padding: 12px 16px;
+    border: 1.5px solid #e5e7ea;
+    border-radius: 12px;
+    background-color: #f9fafb;
+    font-size: 1rem;
+    outline: none;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px -4px rgba(19, 25, 39, 0.12), 0 7px 23px -3px rgba(19, 25, 39, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.cardImage {
+    background-color: #d9d9d9;
+    aspect-ratio: 16 / 10;
+    width: 100%;
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+}
+
+.cardTitle {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #131927;
+    margin: 0;
+}
+
+.cardDonor {
+    font-size: 0.85rem;
+    color: #6d717f;
+    margin: 0;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 5px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.badgePENDENTE {
+    background-color: #fa0;
+}
+
+.badgeAPROVADO {
+    background-color: #43b75d;
+}
+
+.badgeRECUSADO {
+    background-color: #ee443f;
+}
+
+.badgeCONCLUIDO {
+    background-color: #078c5b;
+}
+
+.cancelButton {
+    width: 100%;
+    padding: 10px 14px;
+    background: none;
+    border: 1px solid #ee443f;
+    border-radius: 8px;
+    color: #ee443f;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.cancelButton:hover {
+    background-color: rgba(238, 68, 63, 0.08);
+}
+
+.confirmButton {
+    width: 100%;
+    padding: 10px 14px;
+    background: none;
+    border: 1px solid #43b75d;
+    border-radius: 8px;
+    color: #43b75d;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.confirmButton:hover {
+    background-color: rgba(67, 183, 93, 0.08);
+}
+
+.emptyState {
+    text-align: center;
+    color: #6d717f;
+    padding: 40px 0;
+}
