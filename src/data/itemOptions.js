@@ -13,8 +13,8 @@ export const categoryOptions = [
 
 export const conditionOptions = [
     { value: 'NEW', label: 'Novo' },
-    { value: 'GOOD', label: 'Bom' },
-    { value: 'FAIR', label: 'Regular' },
+    { value: 'GOOD', label: 'Seminovo' },
+    { value: 'FAIR', label: 'Usado' },
 ];
 
 export const availabilityOptions = [
