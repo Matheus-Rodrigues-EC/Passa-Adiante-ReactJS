@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './PaginaUsuario.module.css';
 
@@ -18,18 +18,9 @@ export default function PaginaUsuario() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [usuario, setUsuario] = useState({
-        nome: '',
-        email: '',
-        role: 'USER',
-    });
-
-    useEffect(() => {
-        const usuarioEncontrado = mockUsuarios.find(u => u.id === id);
-        if (usuarioEncontrado) {
-            setUsuario(usuarioEncontrado);
-        }
-    }, [id]);
+    const [usuario, setUsuario] = useState(() => (
+        mockUsuarios.find(u => u.id === id) ?? { nome: '', email: '', role: 'USER' }
+    ));
 
     const handleChange = (e) => {
         const { name, value } = e.target;
