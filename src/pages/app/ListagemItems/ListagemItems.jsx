@@ -1,17 +1,40 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ListagemItems.module.css';
-import mockItems from '../../../data/mockItems.js';
+import { listItems } from '../../../services/itemsService.js';
+import { categoryLabel, conditionLabel, availabilityLabel } from '../../../data/itemOptions.js';
 
 const ITEMS_PER_PAGE = 5;
 
 export default function ListagemItems() {
     const navigate = useNavigate();
+    const [items, setItems] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
-    const filteredItems = mockItems.filter(item =>
-        item.nome.toLowerCase().includes(searchTerm.toLowerCase())
+    useEffect(() => {
+        let cancelled = false;
+
+        listItems()
+            .then((data) => {
+                if (!cancelled) setItems(data);
+            })
+            .catch(() => {
+                if (!cancelled) setError('Não foi possível carregar os itens.');
+            })
+            .finally(() => {
+                if (!cancelled) setLoading(false);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    const filteredItems = items.filter(item =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE) || 1;
@@ -57,6 +80,8 @@ export default function ListagemItems() {
                 </div>
             </div>
 
+            {error && <p className={styles.errorMessage}>{error}</p>}
+
             <div className={styles.card}>
                 <div className={styles.tableWrapper}>
                     <table className={styles.table}>
@@ -78,13 +103,19 @@ export default function ListagemItems() {
                             </tr>
                         </thead>
                         <tbody>
-                            {currentItems.length > 0 ? (
+                            {loading ? (
+                                <tr>
+                                    <td colSpan="5" style={{ textAlign: 'center', padding: '24px', color: '#6b7280' }}>
+                                        Carregando itens...
+                                    </td>
+                                </tr>
+                            ) : currentItems.length > 0 ? (
                                 currentItems.map((item) => (
                                     <tr key={item.id} className={styles.tableRow}>
-                                        <td>{item.nome}</td>
-                                        <td>{item.categoria}</td>
-                                        <td>{item.estado}</td>
-                                        <td>{item.disponivel}</td>
+                                        <td>{item.name}</td>
+                                        <td>{categoryLabel(item.category)}</td>
+                                        <td>{conditionLabel(item.condition)}</td>
+                                        <td>{availabilityLabel(item.availability)}</td>
                                         <td>
                                             <button
                                                 className={styles.actionBtn}
