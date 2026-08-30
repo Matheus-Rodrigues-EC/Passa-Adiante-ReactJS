@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from '../assets/logo.png'
 import menuIcon from '../assets/menu-icon.png'
 
@@ -12,10 +12,16 @@ const NAV_LINKS = [
 ]
 
 function Header() {
+  const navigate = useNavigate()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   function closeMobileMenu() {
     setMobileMenuOpen(false)
+  }
+
+  function goToEscolherPerfil() {
+    closeMobileMenu()
+    navigate('/escolher-perfil')
   }
 
   return (
@@ -67,8 +73,8 @@ function Header() {
           ))}
 
           <div className="menu__mobile-actions">
-            <button type="button" className="btn btn--primary">Entrar</button>
-            <button type="button" className="btn btn--secondary">Cadastre-se</button>
+            <button type="button" className="btn btn--primary" onClick={goToEscolherPerfil}>Entrar</button>
+            <button type="button" className="btn btn--secondary" onClick={goToEscolherPerfil}>Cadastre-se</button>
           </div>
         </ul>
 

@@ -15,6 +15,10 @@ import PaginaItem from './pages/app/PaginaItem/PaginaItem.jsx'
 import ListagemPedidos from './pages/app/ListagemPedidos/ListagemPedidos.jsx'
 import PedidoDetalhe from './pages/app/PedidoDetalhe/PedidoDetalhe.jsx'
 
+import EscolherPerfil from './pages/EscolherPerfil/EscolherPerfil.jsx'
+import { UserLayout } from './layouts/UserLayout.jsx'
+import MinhasSolicitacoes from './pages/user/MinhasSolicitacoes/MinhasSolicitacoes.jsx'
+
 function AppRoutes() {
   return (
     <Routes>
@@ -35,6 +39,14 @@ function AppRoutes() {
         <Route path="pedidos/:id" element={<PedidoDetalhe />} />
         <Route path="usuarios" element={<ListagemUsuarios />} />
         <Route path="usuarios/:id" element={<PaginaUsuario />} />
+      </Route>
+
+      <Route path="/escolher-perfil" element={<EscolherPerfil />} />
+
+      <Route path="/user" element={<UserLayout />}>
+        <Route path="minhas-solicitacoes" element={<MinhasSolicitacoes />} />
+        <Route path="minhas-doacoes" element={<h1>Minhas Doações</h1>} />
+        <Route path="catalogo" element={<h1>Catálogo</h1>} />
       </Route>
     </Routes>
   )

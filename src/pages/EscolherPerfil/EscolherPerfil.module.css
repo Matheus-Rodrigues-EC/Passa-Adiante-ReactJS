@@ -1,0 +1,64 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #fafafa;
+}
+
+.header {
+    width: 100%;
+    height: 80px;
+    background-color: #bfe6f2;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+.logoImg {
+    max-height: 40px;
+    object-fit: contain;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e1e1e;
+    text-align: center;
+    margin: 0;
+}
+
+.buttonsRow {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.profileButton {
+    min-width: 220px;
+    padding: 16px 32px;
+    background-color: #1e6b5c;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.2s;
+}
+
+.profileButton:hover {
+    background-color: #154c41;
+}
