@@ -1,21 +1,43 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './PedidoAguardandoConclusao.module.css';
+import { updateOrderStatus } from '../../../services/ordersService.js';
+import { statusLabel } from '../../../data/orderOptions.js';
 
 export default function PedidoAguardandoConclusao({ pedido }) {
     const navigate = useNavigate();
+    const [saving, setSaving] = useState(false);
+    const [error, setError] = useState(null);
+
+    const isApproved = pedido.status === 'APPROVED';
 
     function handleConcluir() {
-        // Sem persistência real ainda, isso é escopo da integração com a API (#44).
-        navigate('/app/pedidos');
+        setSaving(true);
+        setError(null);
+        updateOrderStatus(pedido.id, 'COMPLETED')
+            .then(() => navigate('/app/pedidos'))
+            .catch(() => {
+                setError('Não foi possível concluir o pedido.');
+                setSaving(false);
+            });
     }
 
     function handleCancelar() {
-        navigate('/app/pedidos');
+        setSaving(true);
+        setError(null);
+        updateOrderStatus(pedido.id, 'CANCELED')
+            .then(() => navigate('/app/pedidos'))
+            .catch(() => {
+                setError('Não foi possível cancelar o pedido.');
+                setSaving(false);
+            });
     }
 
     return (
         <div className={styles.pageContainer}>
-            <h2 className={styles.pageTitle}>Pedido: #{pedido.id}</h2>
+            <h2 className={styles.pageTitle}>Pedido: #{pedido.id.slice(0, 8)}</h2>
+
+            {error && <p className={styles.errorMessage}>{error}</p>}
 
             <div className={styles.content}>
                 <div className={styles.mediaColumn}>
@@ -27,25 +49,20 @@ export default function PedidoAguardandoConclusao({ pedido }) {
                         </svg>
                     </div>
                     <p className={styles.solicitanteInfo}>
-                        Solicitante: {pedido.usuario}<br />
-                        Email: {pedido.email}
+                        Solicitante: {pedido.user.name}<br />
+                        Email: {pedido.user.email}
                     </p>
                 </div>
 
                 <div className={styles.formColumn}>
                     <div className={styles.field}>
                         <span className={styles.fieldLabel}>Item Solicitado:</span>
-                        <div className={styles.fieldBox}>{pedido.item}</div>
+                        <div className={styles.fieldBox}>{pedido.item.name}</div>
                     </div>
 
                     <div className={styles.field}>
                         <span className={styles.fieldLabel}>Status:</span>
-                        <div className={styles.fieldBox}>{pedido.status}</div>
-                    </div>
-
-                    <div className={styles.field}>
-                        <span className={styles.fieldLabel}>Data:</span>
-                        <div className={`${styles.fieldBox} ${styles.fieldBoxDisabled}`}>{pedido.data}</div>
+                        <div className={styles.fieldBox}>{statusLabel(pedido.status)}</div>
                     </div>
                 </div>
             </div>
@@ -57,14 +74,24 @@ export default function PedidoAguardandoConclusao({ pedido }) {
                     </svg>
                     Aprovar
                 </button>
-                <button type="button" className={styles.cancelButton} onClick={handleCancelar}>
+                <button
+                    type="button"
+                    className={styles.cancelButton}
+                    onClick={handleCancelar}
+                    disabled={!isApproved || saving}
+                >
                     <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none">
                         <circle cx="12" cy="12" r="9" />
                         <path d="M9 9l6 6M15 9l-6 6" strokeLinecap="round" />
                     </svg>
                     Cancelar
                 </button>
-                <button type="button" className={styles.completeButton} onClick={handleConcluir}>
+                <button
+                    type="button"
+                    className={styles.completeButton}
+                    onClick={handleConcluir}
+                    disabled={!isApproved || saving}
+                >
                     <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none">
                         <path d="M2 13l4 4L14 9" strokeLinecap="round" strokeLinejoin="round" />
                         <path d="M10 13l4 4L22 9" strokeLinecap="round" strokeLinejoin="round" />

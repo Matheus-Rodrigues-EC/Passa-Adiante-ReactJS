@@ -12,6 +12,21 @@
     margin: 0;
 }
 
+.errorMessage {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.actions button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
 .content {
     display: flex;
     gap: 48px;
