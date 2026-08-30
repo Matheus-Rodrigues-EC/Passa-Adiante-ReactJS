@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './EscolherPerfil.module.css';
 import logoImgSrc from '../../assets/logo-full.png';
 
@@ -8,7 +8,9 @@ export default function EscolherPerfil() {
     return (
         <div className={styles.container}>
             <header className={styles.header}>
-                <img src={logoImgSrc} alt="Passe Adiante" className={styles.logoImg} />
+                <Link to="/">
+                    <img src={logoImgSrc} alt="Passe Adiante" className={styles.logoImg} />
+                </Link>
             </header>
 
             <main className={styles.content}>
