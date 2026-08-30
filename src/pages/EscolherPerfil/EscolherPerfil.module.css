@@ -62,3 +62,17 @@
 .profileButton:hover {
     background-color: #154c41;
 }
+
+@media (max-width: 640px) {
+    .header {
+        padding: 0 16px;
+    }
+
+    .content {
+        padding: 24px;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+}

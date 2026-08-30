@@ -194,3 +194,24 @@
 .saveButton:hover {
     background-color: #157347;
 }
+
+@media (max-width: 640px) {
+    .card {
+        padding: 20px;
+    }
+
+    .formContent {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .imagePlaceholder {
+        height: 180px;
+    }
+
+    .actionsFooter {
+        flex-direction: column-reverse;
+        gap: 12px;
+        align-items: stretch;
+    }
+}
