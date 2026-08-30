@@ -132,3 +132,19 @@
 .actionBtn:hover {
     background-color: rgba(0, 0, 0, 0.08);
 }
+
+@media (max-width: 1024px) {
+    .statsRow {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+    .statsRow {
+        grid-template-columns: 1fr;
+    }
+
+    .statValue {
+        font-size: 2.25rem;
+    }
+}

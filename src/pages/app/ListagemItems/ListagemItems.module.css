@@ -179,3 +179,18 @@
     color: #ffffff;
     font-weight: 600;
   }
+
+  @media (max-width: 640px) {
+    .headerRow {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .filterRow {
+      flex-wrap: wrap;
+    }
+
+    .searchContainer {
+      width: 100%;
+    }
+  }

@@ -19,6 +19,16 @@
     z-index: 20;
 }
 
+.menuToggle {
+    display: none;
+    background: none;
+    border: none;
+    padding: 4px;
+    color: #1f2937;
+    cursor: pointer;
+    margin-right: 16px;
+}
+
 .logoArea {
     display: flex;
     align-items: center;
@@ -64,6 +74,11 @@
     flex: 1;
     height: calc(100vh - 80px);
     overflow: hidden;
+    position: relative;
+}
+
+.overlay {
+    display: none;
 }
 
 .sidebar {
@@ -77,6 +92,10 @@
     box-sizing: border-box;
     flex-shrink: 0;
     height: calc(100vh - 80px);
+}
+
+.sidebarClose {
+    display: none;
 }
 
 .nav {
@@ -135,4 +154,66 @@
     background-color: #fafafa;
     box-sizing: border-box;
     height: calc(100vh - 80px);
+}
+
+@media (max-width: 900px) {
+    .header {
+        padding: 0 16px;
+    }
+
+    .menuToggle {
+        display: flex;
+        align-items: center;
+    }
+
+    .userText {
+        display: none;
+    }
+
+    .overlay {
+        display: block;
+        position: fixed;
+        inset: 80px 0 0 0;
+        background-color: rgba(0, 0, 0, 0.4);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s;
+        z-index: 25;
+    }
+
+    .overlayOpen {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        height: calc(100vh - 80px);
+        transform: translateX(-100%);
+        transition: transform 0.2s;
+        z-index: 30;
+        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebarOpen {
+        transform: translateX(0);
+    }
+
+    .sidebarClose {
+        display: block;
+        align-self: flex-end;
+        background: none;
+        border: none;
+        font-size: 1.75rem;
+        line-height: 1;
+        color: #374151;
+        cursor: pointer;
+        margin-bottom: 12px;
+    }
+
+    .pageContent {
+        padding: 20px;
+    }
 }

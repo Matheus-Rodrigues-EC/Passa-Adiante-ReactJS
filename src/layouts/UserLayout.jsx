@@ -1,12 +1,30 @@
+import { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import styles from './UserLayout.module.css';
 import logoImgSrc from '../assets/logo-full.png';
 import avatarImgSrc from '../assets/avatar.png';
 
 export function UserLayout() {
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    function closeMobileMenu() {
+        setMobileMenuOpen(false);
+    }
+
     return (
         <div className={styles.container}>
             <header className={styles.header}>
+                <button
+                    type="button"
+                    className={styles.menuToggle}
+                    aria-label="Abrir menu"
+                    onClick={() => setMobileMenuOpen(true)}
+                >
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none">
+                        <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />
+                    </svg>
+                </button>
+
                 <div className={styles.logoArea}>
                     <img src={logoImgSrc} alt="Passe Adiante" className={styles.logoImg} />
                 </div>
@@ -20,22 +38,36 @@ export function UserLayout() {
             </header>
 
             <div className={styles.layoutBody}>
-                <aside className={styles.sidebar}>
+                <div
+                    className={mobileMenuOpen ? `${styles.overlay} ${styles.overlayOpen}` : styles.overlay}
+                    onClick={closeMobileMenu}
+                />
+
+                <aside className={mobileMenuOpen ? `${styles.sidebar} ${styles.sidebarOpen}` : styles.sidebar}>
+                    <button
+                        type="button"
+                        className={styles.sidebarClose}
+                        aria-label="Fechar menu"
+                        onClick={closeMobileMenu}
+                    >
+                        &times;
+                    </button>
+
                     <nav className={styles.nav}>
-                        <Link to="/user/minhas-solicitacoes" className={styles.navLink}>
+                        <Link to="/user/minhas-solicitacoes" className={styles.navLink} onClick={closeMobileMenu}>
                             <svg className={styles.icon} viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none">
                                 <path d="M9 17V9M12 17V5M15 17v-4" strokeLinecap="round" strokeLinejoin="round" />
                                 <rect x="3" y="3" width="18" height="18" rx="2" />
                             </svg>
                             Minhas Solicitações
                         </Link>
-                        <Link to="/user/minhas-doacoes" className={styles.navLink}>
+                        <Link to="/user/minhas-doacoes" className={styles.navLink} onClick={closeMobileMenu}>
                             <svg className={styles.icon} viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none">
                                 <path d="M12 21C12 21 4 15.5 4 9.5C4 6.46 6.46 4 9.5 4C11.24 4 12.76 4.81 12.76 4.81C12.76 4.81 14.24 4.81 15 4.81C18.04 4.81 19.5 6.46 19.5 9.5C19.5 15.5 12 21 12 21Z" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                             Minhas Doações
                         </Link>
-                        <Link to="/user/catalogo" className={styles.navLink}>
+                        <Link to="/user/catalogo" className={styles.navLink} onClick={closeMobileMenu}>
                             <svg className={styles.icon} viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none">
                                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" strokeLinecap="round" strokeLinejoin="round" />
