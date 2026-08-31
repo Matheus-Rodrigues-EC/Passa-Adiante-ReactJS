@@ -220,6 +220,18 @@ Para visualizar o MVP:
 2. Navegue pelas telas interativas;
 3. Teste os fluxos principais da aplicação.
 
+### Variáveis de ambiente (execução local)
+
+Antes de rodar `npm run dev`, copie o arquivo de exemplo e ajuste se necessário:
+
+```bash
+cp .env.example .env
+```
+
+A variável `VITE_API_URL` deve apontar para o back-end (NestJS) rodando localmente, por padrão `http://localhost:3000`. Sem esse arquivo, as chamadas à API não funcionam.
+
+> O passo a passo completo de instalação e execução (dependências, banco de dados, back-end) será detalhado na íntegra em breve.
+
 ## 📋 Critérios de Desenvolvimento Atendidos
 
 ✔ Protótipo de alta fidelidade
