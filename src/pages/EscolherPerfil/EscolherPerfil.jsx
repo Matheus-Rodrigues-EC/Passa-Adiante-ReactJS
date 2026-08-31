@@ -1,9 +1,20 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './EscolherPerfil.module.css';
 import logoImgSrc from '../../assets/logo-full.png';
+import { DEMO_USER_IDS, setCurrentUserId } from '../../services/currentUser.js';
 
 export default function EscolherPerfil() {
     const navigate = useNavigate();
+
+    const handleEscolherComum = () => {
+        setCurrentUserId(DEMO_USER_IDS.COMUM);
+        navigate('/user/minhas-solicitacoes');
+    };
+
+    const handleEscolherAdmin = () => {
+        setCurrentUserId(DEMO_USER_IDS.ADMIN);
+        navigate('/app/dashboard');
+    };
 
     return (
         <div className={styles.container}>
@@ -20,14 +31,14 @@ export default function EscolherPerfil() {
                     <button
                         type="button"
                         className={styles.profileButton}
-                        onClick={() => navigate('/user/minhas-solicitacoes')}
+                        onClick={handleEscolherComum}
                     >
                         Usuário comum
                     </button>
                     <button
                         type="button"
                         className={styles.profileButton}
-                        onClick={() => navigate('/app/dashboard')}
+                        onClick={handleEscolherAdmin}
                     >
                         Usuário admin
                     </button>
