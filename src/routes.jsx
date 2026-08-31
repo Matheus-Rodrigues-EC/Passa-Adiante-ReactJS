@@ -18,6 +18,7 @@ import PedidoDetalhe from './pages/app/PedidoDetalhe/PedidoDetalhe.jsx'
 import EscolherPerfil from './pages/EscolherPerfil/EscolherPerfil.jsx'
 import { UserLayout } from './layouts/UserLayout.jsx'
 import MinhasSolicitacoes from './pages/user/MinhasSolicitacoes/MinhasSolicitacoes.jsx'
+import MinhasDoacoes from './pages/user/MinhasDoacoes/MinhasDoacoes.jsx'
 
 function AppRoutes() {
   return (
@@ -45,7 +46,7 @@ function AppRoutes() {
 
       <Route path="/user" element={<UserLayout />}>
         <Route path="minhas-solicitacoes" element={<MinhasSolicitacoes />} />
-        <Route path="minhas-doacoes" element={<h1>Minhas Doações</h1>} />
+        <Route path="minhas-doacoes" element={<MinhasDoacoes />} />
         <Route path="catalogo" element={<h1>Catálogo</h1>} />
       </Route>
     </Routes>
