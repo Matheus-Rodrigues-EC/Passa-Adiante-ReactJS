@@ -19,6 +19,8 @@ import EscolherPerfil from './pages/EscolherPerfil/EscolherPerfil.jsx'
 import { UserLayout } from './layouts/UserLayout.jsx'
 import MinhasSolicitacoes from './pages/user/MinhasSolicitacoes/MinhasSolicitacoes.jsx'
 import MinhasDoacoes from './pages/user/MinhasDoacoes/MinhasDoacoes.jsx'
+import EditarDoacao from './pages/user/EditarDoacao/EditarDoacao.jsx'
+import SolicitacoesDoacao from './pages/user/SolicitacoesDoacao/SolicitacoesDoacao.jsx'
 import UserCatalogo from './pages/user/Catalogo/Catalogo.jsx'
 
 function AppRoutes() {
@@ -48,6 +50,8 @@ function AppRoutes() {
       <Route path="/user" element={<UserLayout />}>
         <Route path="minhas-solicitacoes" element={<MinhasSolicitacoes />} />
         <Route path="minhas-doacoes" element={<MinhasDoacoes />} />
+        <Route path="minhas-doacoes/:id/editar" element={<EditarDoacao />} />
+        <Route path="minhas-doacoes/:id/solicitacoes" element={<SolicitacoesDoacao />} />
         <Route path="catalogo" element={<UserCatalogo />} />
       </Route>
     </Routes>
