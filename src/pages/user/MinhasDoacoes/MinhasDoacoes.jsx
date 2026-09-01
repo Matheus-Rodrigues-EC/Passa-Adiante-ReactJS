@@ -1,24 +1,58 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './MinhasDoacoes.module.css';
+import { listItems, deleteItem } from '../../../services/itemsService.js';
+import { getCurrentUserId } from '../../../services/currentUser.js';
 import { availabilityOptions, availabilityLabel } from '../../../data/itemOptions.js';
 
 const AVAILABILITY_FILTER_OPTIONS = [{ value: 'TODOS', label: 'Todos' }, ...availabilityOptions];
 
-const mockDoacoes = [
-    { id: 1, item: 'Kit de Livros Didáticos - 5° Ano (Ensino Fundamental)', localizacao: 'Bairro XX, Caucaia-CE', availability: 'AVAILABLE' },
-    { id: 2, item: 'Mochila Escolar Reforçada', localizacao: 'Bairro YY, Caucaia-CE', availability: 'AVAILABLE' },
-    { id: 3, item: 'Coleção de Livros Didáticos', localizacao: 'Bairro XX, Caucaia-CE', availability: 'DONATED' },
-    { id: 4, item: 'Kit de Lápis de Cor 48un.', localizacao: 'Bairro ZZ, Caucaia-CE', availability: 'AVAILABLE' },
-    { id: 5, item: 'Estojo Escolar', localizacao: 'Bairro YY, Caucaia-CE', availability: 'DONATED' },
-    { id: 6, item: 'Uniforme Escolar Tamanho M', localizacao: 'Bairro XX, Caucaia-CE', availability: 'AVAILABLE' },
-];
-
 export default function MinhasDoacoes() {
+    const navigate = useNavigate();
+    const [doacoes, setDoacoes] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [deletingId, setDeletingId] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [availabilityFilter, setAvailabilityFilter] = useState('TODOS');
 
-    const filteredDoacoes = mockDoacoes.filter((doacao) => {
-        const matchesSearch = doacao.item.toLowerCase().includes(searchTerm.toLowerCase());
+    function fetchDoacoes() {
+        const currentUserId = getCurrentUserId();
+
+        return listItems().then((items) => {
+            setDoacoes(items.filter((item) => item.userId === currentUserId));
+        });
+    }
+
+    useEffect(() => {
+        let cancelled = false;
+
+        fetchDoacoes()
+            .catch(() => {
+                if (!cancelled) setError('Não foi possível carregar suas doações.');
+            })
+            .finally(() => {
+                if (!cancelled) setLoading(false);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    function handleExcluir(item) {
+        if (!window.confirm(`Excluir o item "${item.name}"? Essa ação não pode ser desfeita.`)) return;
+
+        setDeletingId(item.id);
+        setError(null);
+        deleteItem(item.id)
+            .then(() => fetchDoacoes())
+            .catch(() => setError('Não foi possível excluir o item.'))
+            .finally(() => setDeletingId(null));
+    }
+
+    const filteredDoacoes = doacoes.filter((doacao) => {
+        const matchesSearch = doacao.name.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesAvailability = availabilityFilter === 'TODOS' || doacao.availability === availabilityFilter;
         return matchesSearch && matchesAvailability;
     });
@@ -26,6 +60,8 @@ export default function MinhasDoacoes() {
     return (
         <div className={styles.pageContainer}>
             <h1 className={styles.pageTitle}>Minhas Doações</h1>
+
+            {error && <p className={styles.errorMessage}>{error}</p>}
 
             <div className={styles.filtersRow}>
                 <input
@@ -51,30 +87,42 @@ export default function MinhasDoacoes() {
                 </div>
             </div>
 
-            {filteredDoacoes.length > 0 ? (
+            {loading ? (
+                <p className={styles.emptyState}>Carregando...</p>
+            ) : filteredDoacoes.length > 0 ? (
                 <div className={styles.grid}>
                     {filteredDoacoes.map((doacao) => (
                         <article key={doacao.id} className={styles.card}>
                             <div className={styles.cardImage} />
                             <div className={styles.cardContent}>
-                                <h2 className={styles.cardTitle}>{doacao.item}</h2>
-                                <p className={styles.cardLocation}>
-                                    <strong>Localização:</strong> {doacao.localizacao}
-                                </p>
+                                <h2 className={styles.cardTitle}>{doacao.name}</h2>
 
                                 <span className={`${styles.badge} ${styles[`badge${doacao.availability}`]}`}>
                                     {availabilityLabel(doacao.availability).toUpperCase()}
                                 </span>
 
-                                <button type="button" className={styles.primaryButton}>
+                                <button
+                                    type="button"
+                                    className={styles.primaryButton}
+                                    onClick={() => navigate(`/user/minhas-doacoes/${doacao.id}/solicitacoes`)}
+                                >
                                     Ver Solicitações
                                 </button>
 
                                 <div className={styles.secondaryActions}>
-                                    <button type="button" className={styles.editButton}>
+                                    <button
+                                        type="button"
+                                        className={styles.editButton}
+                                        onClick={() => navigate(`/user/minhas-doacoes/${doacao.id}/editar`)}
+                                    >
                                         Editar Item
                                     </button>
-                                    <button type="button" className={styles.deleteButton}>
+                                    <button
+                                        type="button"
+                                        className={styles.deleteButton}
+                                        onClick={() => handleExcluir(doacao)}
+                                        disabled={deletingId === doacao.id}
+                                    >
                                         Excluir Item
                                     </button>
                                 </div>
