@@ -31,7 +31,7 @@ Doadores (famílias, escolas, instituições) com material escolar disponível, 
 
 - **Fluxo Usuário comum**: escolher perfil (sem login real, ver seção de instalação), navegar pelo catálogo de itens disponíveis e solicitar um item, acompanhar o status das próprias solicitações (pendente / aprovado / cancelado / concluído), e gerenciar as próprias doações (editar, excluir, ver e aprovar/recusar pedidos recebidos).
 - **Fluxo Admin**: dashboard com indicadores gerais, listagem/CRUD de itens, listagem/aprovação de pedidos, listagem/edição de usuários.
-- **Site institucional**: páginas públicas (Home, Sobre o Projeto, Catálogo público, Como Participar, Contato) reaproveitadas do site estático do projeto — ver seção abaixo.
+- **Site institucional**: páginas públicas (Home, Sobre o Projeto, Catálogo público, Como Participar, Contato) reaproveitadas do site estático do projeto (ver seção abaixo).
 
 ### 🔗 Sobre o site institucional reaproveitado
 
@@ -58,7 +58,7 @@ O protótipo foi desenvolvido no Figma, contemplando telas principais, fluxos de
 
 | Tecnologia | Uso |
 |---|---|
-| [React 19](https://react.dev/) | Biblioteca de UI — componentes e estado local das telas |
+| [React 19](https://react.dev/) | Biblioteca de UI: componentes e estado local das telas |
 | [Vite](https://vitejs.dev/) | Build tool e servidor de desenvolvimento, pela velocidade de start/HMR |
 | [react-router-dom](https://reactrouter.com/) | Roteamento entre as páginas (site público, área Admin, área Usuário) |
 | [axios](https://axios-http.com/) | Cliente HTTP para consumir a API do back-end |
@@ -115,7 +115,7 @@ O app depende da API rodando localmente. É preciso clonar e configurar os **doi
 
 ### 1. Back-end (API)
 
-Siga o [Manual de Instalação](https://github.com/Matheus-Rodrigues-EC/PassaAdiante-NestJS/blob/main/docs/instalation-manual.md) do repositório `PassaAdiante-NestJS` — resumindo: clonar, `npm install`, configurar `.env` (`DATABASE_URL` + `FRONTEND_URL`, com um Postgres local ou via Docker), `npx prisma generate`, `npx prisma migrate dev`, `npx prisma db seed` (cria os dois usuários fixos de demonstração) e `npm run start:dev`. A API sobe em `http://localhost:3000`.
+Siga o [Manual de Instalação](https://github.com/Matheus-Rodrigues-EC/PassaAdiante-NestJS/blob/main/docs/instalation-manual.md) do repositório `PassaAdiante-NestJS`. Resumindo: clonar, `npm install`, configurar `.env` (`DATABASE_URL` + `FRONTEND_URL`, com um Postgres local ou via Docker), `npx prisma generate`, `npx prisma migrate dev`, `npx prisma db seed` (cria os dois usuários fixos de demonstração) e `npm run start:dev`. A API sobe em `http://localhost:3000`.
 
 ### 2. Front-end (este repositório)
 
@@ -146,11 +146,11 @@ Abra `http://localhost:5173` (o Vite escolhe automaticamente a próxima porta li
 ## 🔧 Processo de Desenvolvimento
 
 - **Equipe**: Holivane Holanda, Sara Ferreira e Matheus Rodrigues.
-- **Divisão de tarefas e GitHub**: o trabalho foi quebrado em Issues, uma por tela/funcionalidade, agrupadas na milestone **MVP Web Funcional**. Cada Issue vira uma branch (`feat/<n>-descricao` ou `fix/<n>-descricao`) e um Pull Request para revisão antes de ir para `main` — sem merge direto na branch principal.
-- **Estratégia de versionamento**: commits no padrão [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `docs:`...); o back-end reforça isso com `commitlint` + Husky.
+- **Divisão de tarefas e GitHub**: o trabalho foi quebrado em Issues, uma por tela/funcionalidade, agrupadas na milestone **MVP Web Funcional**. Cada Issue vira uma branch (`feat/<n>-descricao` ou `fix/<n>-descricao`) e um Pull Request para revisão antes de ir para `main`, sem merge direto na branch principal.
+- **Estratégia de versionamento**: commits no padrão [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `docs:`...). O back-end reforça isso com `commitlint` + Husky.
 - **Dificuldades encontradas e soluções adotadas**:
-  - Sem tempo/escopo para autenticação real no MVP — resolvido com um mecanismo de "usuário atual" simples (dois usuários fixos de demonstração, seed do Prisma, `localStorage` no front) que simula os dois perfis sem exigir login.
-  - Front e back rodando em portas/origens diferentes durante o desenvolvimento local — resolvido configurando CORS no NestJS (`FRONTEND_URL`) para aceitar a origem do Vite.
+  - Sem tempo/escopo para autenticação real no MVP, resolvido com um mecanismo de "usuário atual" simples (dois usuários fixos de demonstração, seed do Prisma, `localStorage` no front) que simula os dois perfis sem exigir login.
+  - Front e back rodando em portas/origens diferentes durante o desenvolvimento local, resolvido configurando CORS no NestJS (`FRONTEND_URL`) para aceitar a origem do Vite.
   - Um bug de restrição de chave estrangeira do banco (erro genérico 500 ao excluir um item que já tinha pedido associado) foi identificado durante testes manuais da integração e corrigido no back-end, passando a devolver uma mensagem de erro clara (409) nesse caso.
 
 ## 📸 Demonstração do MVP
@@ -187,9 +187,9 @@ Durante o desenvolvimento do MVP, a equipe tomou diversas decisões visando melh
 
 Toda a construção da interface foi baseada na metodologia de Design Centrado no Usuário, priorizando:
 
-- Facilidade de navegação;
-- Clareza das informações;
-- Simplicidade visual;
+- Facilidade de navegação.
+- Clareza das informações.
+- Simplicidade visual.
 - Acessibilidade.
 
 ---
@@ -198,15 +198,15 @@ Toda a construção da interface foi baseada na metodologia de Design Centrado n
 
 As interfaces foram projetadas para evitar:
 
-- Excesso de informações;
-- Poluição visual;
-- Menus complexos;
+- Excesso de informações.
+- Poluição visual.
+- Menus complexos.
 - Ações desnecessárias.
 
 O foco foi permitir que o usuário compreenda rapidamente:
 
-- Onde está;
-- O que pode fazer;
+- Onde está.
+- O que pode fazer.
 - Como concluir determinada ação.
 
 --- 
@@ -215,9 +215,9 @@ O foco foi permitir que o usuário compreenda rapidamente:
 
 Foi criada uma identidade visual padronizada utilizando:
 
-- Paleta de cores consistente;
-- Tipografia uniforme;
-- Componentes reutilizáveis;
+- Paleta de cores consistente.
+- Tipografia uniforme.
+- Componentes reutilizáveis.
 - Padrões modernos de interface.
 
 Isso ajuda a reduzir a curva de aprendizado e melhora a familiaridade do usuário com o sistema.
@@ -226,19 +226,19 @@ Isso ajuda a reduzir a curva de aprendizado e melhora a familiaridade do usuári
 
 As funcionalidades foram organizadas de maneira lógica para:
 
-- Facilitar a localização de informações;
-- Otimizar fluxos;
-- Minimizar cliques;
+- Facilitar a localização de informações.
+- Otimizar fluxos.
+- Minimizar cliques.
 - Evitar confusão durante a navegação.
 
 ### Processo Iterativo
 
 O desenvolvimento ocorreu de forma colaborativa e iterativa:
 
-- Criação inicial das telas;
-- Coleta de feedbacks;
-- Refinamento do design;
-- Validação dos fluxos;
+- Criação inicial das telas.
+- Coleta de feedbacks.
+- Refinamento do design.
+- Validação dos fluxos.
 - Ajustes finais.
 
 Os comentários e revisões foram realizados diretamente no Figma, permitindo alinhamento contínuo entre todos os integrantes da equipe.
@@ -247,19 +247,19 @@ Os comentários e revisões foram realizados diretamente no Figma, permitindo al
 
 O **Passa Adiante** pode ser utilizado por:
 
-- Comunidades locais;
-- ONGs;
-- Instituições beneficentes;
-- Projetos sociais;
-- Grupos de bairro;
+- Comunidades locais.
+- ONGs.
+- Instituições beneficentes.
+- Projetos sociais.
+- Grupos de bairro.
 - Pessoas interessadas em economia colaborativa.
 
 A solução pode ajudar tanto indivíduos quanto organizações a:
 
-- Reduzir desperdícios;
-- Incentivar reutilização;
-- Facilitar doações;
-- Ampliar ações solidárias;
+- Reduzir desperdícios.
+- Incentivar reutilização.
+- Facilitar doações.
+- Ampliar ações solidárias.
 - Conectar pessoas com necessidades reais.
 
 Além disso, o sistema pode servir como base para futuras implementações voltadas ao impacto social e sustentabilidade.
@@ -270,9 +270,9 @@ A Experiência do Usuário (UX) possui papel fundamental no sucesso de qualquer 
 
 Quando um sistema é intuitivo e acessível:
 
-- As pessoas conseguem utilizá-lo com mais facilidade;
-- A curva de aprendizado diminui;
-- O usuário sente mais confiança durante a navegação;
+- As pessoas conseguem utilizá-lo com mais facilidade.
+- A curva de aprendizado diminui.
+- O usuário sente mais confiança durante a navegação.
 - Aumenta a chance de adoção da plataforma no mundo real.
 
 No contexto do **Passa Adiante**, investir em UX foi essencial para garantir que qualquer pessoa, independentemente do nível de familiaridade com tecnologia, consiga utilizar a plataforma de maneira simples, rápida e eficiente.
