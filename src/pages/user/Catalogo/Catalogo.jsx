@@ -1,36 +1,63 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Catalogo.module.css';
+import { listItems } from '../../../services/itemsService.js';
+import { createOrder } from '../../../services/ordersService.js';
+import { getCurrentUserId } from '../../../services/currentUser.js';
 import { categoryOptions, categoryLabel, conditionLabel } from '../../../data/itemOptions.js';
 
 const CATEGORY_FILTER_OPTIONS = [{ value: 'TODOS', label: 'Todas' }, ...categoryOptions];
 
-const mockCatalogo = [
-    { id: 1, item: 'Kit de Livros Didáticos - 5° Ano (Ensino Fundamental)', doador: 'Ana Souza', localizacao: 'Bairro XX, Caucaia-CE', category: 'BOOK', condition: 'GOOD' },
-    { id: 2, item: 'Mochila Escolar Reforçada', doador: 'Carlos Lima', localizacao: 'Bairro YY, Caucaia-CE', category: 'BACKPACK', condition: 'NEW' },
-    { id: 3, item: 'Kit de Lápis de Cor 48un.', doador: 'Fernanda Alves', localizacao: 'Bairro ZZ, Caucaia-CE', category: 'PENCIL', condition: 'NEW' },
-    { id: 4, item: 'Uniforme Escolar Tamanho M', doador: 'João Pedro', localizacao: 'Bairro XX, Caucaia-CE', category: 'UNIFORM', condition: 'GOOD' },
-    { id: 5, item: 'Estojo Escolar', doador: 'Marina Costa', localizacao: 'Bairro YY, Caucaia-CE', category: 'PENCIL_CASE', condition: 'FAIR' },
-    { id: 6, item: 'Caderno Universitário 200 folhas', doador: 'Ana Souza', localizacao: 'Bairro XX, Caucaia-CE', category: 'NOTEBOOK', condition: 'NEW' },
-];
-
 export default function Catalogo() {
+    const [items, setItems] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [requestingId, setRequestingId] = useState(null);
+    const [requestedIds, setRequestedIds] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [categoryFilter, setCategoryFilter] = useState('TODOS');
-    const [requestedIds, setRequestedIds] = useState([]);
 
-    const filteredCatalogo = mockCatalogo.filter((item) => {
-        const matchesSearch = item.item.toLowerCase().includes(searchTerm.toLowerCase());
+    useEffect(() => {
+        let cancelled = false;
+        const currentUserId = getCurrentUserId();
+
+        listItems()
+            .then((data) => {
+                if (!cancelled) {
+                    setItems(data.filter((item) => item.availability === 'AVAILABLE' && item.userId !== currentUserId));
+                }
+            })
+            .catch(() => {
+                if (!cancelled) setError('Não foi possível carregar o catálogo.');
+            })
+            .finally(() => {
+                if (!cancelled) setLoading(false);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    const filteredItems = items.filter((item) => {
+        const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesCategory = categoryFilter === 'TODOS' || item.category === categoryFilter;
         return matchesSearch && matchesCategory;
     });
 
     function handleSolicitar(itemId) {
-        setRequestedIds((current) => [...current, itemId]);
+        setRequestingId(itemId);
+        setError(null);
+        createOrder({ userId: getCurrentUserId(), itemId, status: 'PENDING' })
+            .then(() => setRequestedIds((current) => [...current, itemId]))
+            .catch(() => setError('Não foi possível solicitar o item.'))
+            .finally(() => setRequestingId(null));
     }
 
     return (
         <div className={styles.pageContainer}>
             <h1 className={styles.pageTitle}>Catálogo</h1>
+
+            {error && <p className={styles.errorMessage}>{error}</p>}
 
             <div className={styles.filtersRow}>
                 <input
@@ -56,21 +83,20 @@ export default function Catalogo() {
                 </div>
             </div>
 
-            {filteredCatalogo.length > 0 ? (
+            {loading ? (
+                <p className={styles.emptyState}>Carregando...</p>
+            ) : filteredItems.length > 0 ? (
                 <div className={styles.grid}>
-                    {filteredCatalogo.map((item) => {
+                    {filteredItems.map((item) => {
                         const jaSolicitado = requestedIds.includes(item.id);
 
                         return (
                             <article key={item.id} className={styles.card}>
                                 <div className={styles.cardImage} />
                                 <div className={styles.cardContent}>
-                                    <h2 className={styles.cardTitle}>{item.item}</h2>
+                                    <h2 className={styles.cardTitle}>{item.name}</h2>
                                     <p className={styles.cardDonor}>
-                                        <strong>Doador:</strong> {item.doador}
-                                    </p>
-                                    <p className={styles.cardLocation}>
-                                        <strong>Localização:</strong> {item.localizacao}
+                                        <strong>Doador:</strong> {item.user?.name ?? '—'}
                                     </p>
 
                                     <div className={styles.badgeRow}>
@@ -82,9 +108,9 @@ export default function Catalogo() {
                                         type="button"
                                         className={styles.primaryButton}
                                         onClick={() => handleSolicitar(item.id)}
-                                        disabled={jaSolicitado}
+                                        disabled={jaSolicitado || requestingId === item.id}
                                     >
-                                        {jaSolicitado ? 'Solicitado' : 'Solicitar Item'}
+                                        {jaSolicitado ? 'Solicitado' : requestingId === item.id ? 'Solicitando...' : 'Solicitar Item'}
                                     </button>
                                 </div>
                             </article>
