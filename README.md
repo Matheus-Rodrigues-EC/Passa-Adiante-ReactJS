@@ -44,6 +44,50 @@ Sem sistema de login real no MVP (ver [Manual de Instalação](https://github.co
 - **Usuário comum** → Minhas Solicitações, Minhas Doações, Catálogo
 - **Usuário admin** → Dashboard, Itens, Pedidos, Usuários
 
+## 🤝 Como Utilizar a Aplicação (Componente Extensionista)
+
+### Como qualquer pessoa pode acessar o sistema
+
+O MVP ainda não tem cadastro nem login reais (ver aviso na seção de Tecnologias). Qualquer pessoa que abra a aplicação acessa `/escolher-perfil` e escolhe entre dois perfis fixos de demonstração: "Usuário comum" ou "Usuário admin". Não é preciso senha nem criar conta para testar o sistema completo.
+
+Numa versão real fora do MVP, esse passo seria substituído por cadastro e login de verdade, com cada pessoa usando sua própria conta.
+
+### Como utilizar as principais funcionalidades
+
+Como **Usuário comum**, a pessoa consegue:
+
+- Navegar pelo Catálogo, buscar por nome do item e filtrar por categoria.
+- Solicitar um item disponível, clicando em "Solicitar Item".
+- Acompanhar o andamento das próprias solicitações em "Minhas Solicitações", com filtro por status. Enquanto o pedido está pendente, dá para cancelar. Quando o doador aprova, dá para confirmar a entrega.
+- Gerenciar os próprios itens doados em "Minhas Doações": editar informações do item, ver e aprovar ou recusar as solicitações recebidas para aquele item, ou excluir o item.
+
+No estado atual do MVP, o cadastro de um novo item para doação ainda só existe na área Admin (`/app/items/novo`). O usuário comum consegue editar e gerenciar itens que já existem, mas ainda não tem uma tela própria para cadastrar uma doação nova. Essa é uma limitação conhecida do MVP, e não um recurso esquecido por acidente.
+
+Como **Usuário admin**, a pessoa consegue:
+
+- Ver um resumo geral no Dashboard (total de usuários, total de itens, pedidos pendentes, itens disponíveis).
+- Cadastrar, listar e editar itens de qualquer usuário.
+- Listar pedidos e abrir o detalhe de cada um para aprovar, recusar ou acompanhar até a conclusão.
+- Listar e editar usuários cadastrados no sistema.
+
+### Qual problema a aplicação busca resolver
+
+O Passa Adiante conecta quem tem material escolar em bom estado, mas parado, a quem precisa desse material e não tem condição de comprar. O objetivo é reduzir o desperdício de itens ainda úteis e, ao mesmo tempo, reduzir o custo de acesso a material escolar para famílias em situação de vulnerabilidade.
+
+### Quem pode se beneficiar da solução
+
+- Famílias e estudantes que precisam de material escolar e não têm condição de comprar.
+- Famílias, escolas e pessoas físicas que têm material escolar sobrando e querem doar em vez de descartar.
+- ONGs, projetos sociais e grupos de bairro que já fazem esse tipo de intermediação de forma manual e podem usar a plataforma para organizar doações e pedidos num só lugar.
+
+### Exemplos de uso em cenários reais
+
+**Cenário 1, solicitando um item.** Uma estudante precisa de uma mochila para o início do ano letivo. Ela acessa `/escolher-perfil`, escolhe "Usuário comum" e vai até o Catálogo. Busca por "mochila", encontra uma disponível e clica em "Solicitar Item". O pedido aparece como "Pendente" em Minhas Solicitações, até que o doador aprove.
+
+**Cenário 2, gerenciando uma doação.** Uma pessoa cadastrou anteriormente um kit de livros didáticos que não usa mais. Em "Minhas Doações", ela vê o item listado como disponível. Quando alguém solicita esse item, ela acessa "Ver Solicitações" a partir do card do item, revisa quem pediu e aprova o pedido. O item some do Catálogo para outras pessoas assim que é doado.
+
+**Cenário 3, uso institucional.** Uma escola ou ONG que organiza campanhas de arrecadação de material escolar usa a área Admin para ter visão geral de tudo que está cadastrado no sistema: quantos itens estão disponíveis, quantos pedidos estão pendentes de aprovação e quem são os usuários envolvidos, sem precisar controlar isso manualmente em planilha.
+
 ## 🎨 Protótipo de Alta Fidelidade
 
 O protótipo foi desenvolvido no Figma, contemplando telas principais, fluxos de navegação, componentes reutilizáveis e identidade visual padronizada.
