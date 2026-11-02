@@ -10,6 +10,9 @@ function Contato() {
   const [feedback, setFeedback] = useState(null)
   const clearFeedbackTimeout = useRef(null)
 
+  const canSubmit =
+    nome.trim() !== '' && email.trim() !== '' && mensagem.trim() !== ''
+
   useEffect(() => {
     return () => clearTimeout(clearFeedbackTimeout.current)
   }, [])
@@ -48,7 +51,7 @@ function Contato() {
       <h1 className="page-title">Contato</h1>
       <p>Entre em contato conosco preenchendo os dados abaixo e enviando sua mensagem.</p>
 
-      <form id="contact-form" className="card-surface" onSubmit={handleSubmit}>
+      <form id="contact-form" className="card-surface" onSubmit={handleSubmit} noValidate>
         <div>
           <label htmlFor="nome">Nome</label>
           <input
@@ -105,7 +108,7 @@ function Contato() {
           {feedback?.message}
         </div>
 
-        <button type="submit" className="btn btn--primary">
+        <button type="submit" className="btn btn--primary" disabled={!canSubmit}>
           Enviar
         </button>
       </form>
