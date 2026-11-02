@@ -52,51 +52,57 @@ function Contato() {
       <p>Entre em contato conosco preenchendo os dados abaixo e enviando sua mensagem.</p>
 
       <form id="contact-form" className="card-surface" onSubmit={handleSubmit} noValidate>
-        <div>
-          <label htmlFor="nome">Nome</label>
-          <input
-            type="text"
-            id="nome"
-            name="nome"
-            value={nome}
-            onChange={(event) => setNome(event.target.value)}
-            required
-          />
-        </div>
+        <div className="contact-form__columns">
+          <div className="contact-form__column">
+            <div className="contact-form__field">
+              <label htmlFor="nome">Nome</label>
+              <input
+                type="text"
+                id="nome"
+                name="nome"
+                value={nome}
+                onChange={(event) => setNome(event.target.value)}
+                required
+              />
+            </div>
 
-        <div>
-          <label htmlFor="email">E-mail</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value.replace(/\s+/g, ''))}
-            required
-          />
-        </div>
+            <div className="contact-form__field">
+              <label htmlFor="email">E-mail</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value.replace(/\s+/g, ''))}
+                required
+              />
+            </div>
 
-        <div>
-          <label htmlFor="assunto">Assunto</label>
-          <input
-            type="text"
-            id="assunto"
-            name="assunto"
-            value={assunto}
-            onChange={(event) => setAssunto(event.target.value)}
-          />
-        </div>
+            <div className="contact-form__field">
+              <label htmlFor="assunto">Assunto</label>
+              <input
+                type="text"
+                id="assunto"
+                name="assunto"
+                value={assunto}
+                onChange={(event) => setAssunto(event.target.value)}
+              />
+            </div>
+          </div>
 
-        <div>
-          <label htmlFor="mensagem">Mensagem</label>
-          <textarea
-            id="mensagem"
-            name="mensagem"
-            rows="6"
-            value={mensagem}
-            onChange={(event) => setMensagem(event.target.value)}
-            required
-          />
+          <div className="contact-form__column">
+            <div className="contact-form__field contact-form__field--message">
+              <label htmlFor="mensagem">Mensagem</label>
+              <textarea
+                id="mensagem"
+                name="mensagem"
+                rows="6"
+                value={mensagem}
+                onChange={(event) => setMensagem(event.target.value)}
+                required
+              />
+            </div>
+          </div>
         </div>
 
         <div
@@ -108,9 +114,11 @@ function Contato() {
           {feedback?.message}
         </div>
 
-        <button type="submit" className="btn btn--primary" disabled={!canSubmit}>
-          Enviar
-        </button>
+        <div className="contact-form__actions">
+          <button type="submit" className="btn btn--primary" disabled={!canSubmit}>
+            Enviar
+          </button>
+        </div>
       </form>
     </section>
   )
