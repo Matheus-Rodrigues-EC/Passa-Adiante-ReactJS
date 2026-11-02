@@ -74,6 +74,9 @@ function Contato() {
                 name="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value.replace(/\s+/g, ''))}
+                onKeyDown={(event) => {
+                  if (event.key === ' ') event.preventDefault()
+                }}
                 required
               />
             </div>
