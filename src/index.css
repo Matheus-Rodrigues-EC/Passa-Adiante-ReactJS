@@ -533,7 +533,6 @@ h1 {
     gap: 1.25rem;
     width: 100%;
     max-width: 56rem;
-    min-height: 31rem;
     padding: 1.5rem;
 }
 
@@ -541,7 +540,6 @@ h1 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
-    flex: 1;
 }
 
 .contact-form__column {
@@ -585,7 +583,7 @@ h1 {
 #contact-form textarea {
     flex: 1;
     min-height: 10rem;
-    resize: vertical;
+    resize: none;
 }
 
 #contact-form input:focus,
