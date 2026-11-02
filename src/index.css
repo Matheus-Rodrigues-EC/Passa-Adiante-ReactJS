@@ -533,14 +533,34 @@ h1 {
     gap: 1.25rem;
     width: 100%;
     max-width: 56rem;
-    min-height: 31rem;
     padding: 1.5rem;
 }
 
-#contact-form>div {
+.contact-form__columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.contact-form__column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.contact-form__field {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+}
+
+.contact-form__field--message {
+    flex: 1;
+}
+
+.contact-form__actions {
+    display: flex;
+    justify-content: flex-end;
 }
 
 #contact-form label {
@@ -561,18 +581,15 @@ h1 {
 }
 
 #contact-form textarea {
-    resize: vertical;
+    flex: 1;
+    min-height: 10rem;
+    resize: none;
 }
 
 #contact-form input:focus,
 #contact-form textarea:focus {
     outline: none;
     border-color: var(--color-primary);
-}
-
-#contact-form .btn {
-    width: 100%;
-    justify-content: center;
 }
 
 #contact-form .btn:disabled {
@@ -582,6 +599,12 @@ h1 {
 
 #contact-form .btn--primary:disabled:hover {
     background-color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+    .contact-form__columns {
+        grid-template-columns: 1fr;
+    }
 }
 
 .form-feedback {
