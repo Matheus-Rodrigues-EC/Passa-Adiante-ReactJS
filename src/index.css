@@ -575,6 +575,15 @@ h1 {
     justify-content: center;
 }
 
+#contact-form .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#contact-form .btn--primary:disabled:hover {
+    background-color: var(--color-primary);
+}
+
 .form-feedback {
     display: none;
     font-size: 0.875rem;
